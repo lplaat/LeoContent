@@ -28,12 +28,22 @@ LeoContent is a web application that helps you organize and stream your media fi
    ```
    Edit the .env file with your database credentials and media directories.
 
-3. Start the application using Docker
+3. Set up the database
+   ```
+   # Import the database schema
+   mysql -u your_username -p your_database_name < database.sql
+   ```
+   This will create all necessary tables and the default admin user (username: admin).
+
+4. Start the application using Docker
    ```
    docker-compose up -d
    ```
 
-4. Access the application at http://localhost
+5. Access the application at http://localhost
+   Login with the default admin account:
+   - Username: admin
+   - Password: admin
 
 ## Requirements
 

@@ -1,0 +1,26 @@
+{
+    "name": "lplaat/leo-content",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lplaat",
+            "email": "leonard.van.der.plaat@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/database": "^11.31",
+        "illuminate/routing": "^11.31",
+        "illuminate/events": "^11.31",
+        "illuminate/container": "^11.31",
+        "illuminate/http": "^11.31",
+        "illuminate/pipeline": "^11.31",
+        "illuminate/contracts": "^11.31",
+        "laravel/serializable-closure": "^2.0",
+        "ext-curl": "*"
+    }
+}

@@ -1,0 +1,6 @@
+- [ ] Add likes
+- [ ] Add support for shows
+- [ ] Add search
+- [ ] Add user management
+- [ ] Add playback stuff
+- [ ] Content save video length, and quality

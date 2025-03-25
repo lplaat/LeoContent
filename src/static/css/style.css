@@ -1,0 +1,257 @@
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: #343a40;
+    color: white;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar a:hover {
+    background-color: #495057;
+    border-radius: 4px;
+}
+
+.sidebar a i {
+    margin-right: 15px;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+main {
+    margin-left: 250px;
+}
+
+/* Modern DataTables Comprehensive Styling */
+.dataTables_wrapper {
+    font-family: 'Arial', sans-serif;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
+    padding-top: 50px; /* Space for absolute positioned controls */
+}
+
+/* Absolute Positioning for Controls */
+.dataTables_wrapper .dataTables_filter {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 10;
+}
+
+.dataTables_wrapper .dataTables_length {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    z-index: 10;
+}
+
+/* Control Inputs Styling */
+.dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 10px;
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    width: 200px;
+    max-width: 300px;
+}
+
+/* Table Header Styling */
+.dataTables_wrapper .dataTables_scrollHead,
+.dataTables_wrapper table.dataTable thead {
+    background-color: #3498db;
+    color: white;
+}
+
+.dataTables_wrapper table.dataTable thead th {
+    padding: 12px 15px;
+    border-bottom: 2px solid #2980b9;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Table Body Styling */
+.dataTables_wrapper table.dataTable tbody {
+    background-color: white;
+}
+
+.dataTables_wrapper table.dataTable tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.dataTables_wrapper table.dataTable tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+.dataTables_wrapper table.dataTable tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.dataTables_wrapper table.dataTable tbody td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Pagination Styling */
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+    color: #3498db;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Processing Indicator */
+.dataTables_wrapper .dataTables_processing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    margin-left: -100px;
+    margin-top: -25px;
+    text-align: center;
+    padding: 15px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Scrollable Table */
+.dataTables_wrapper .dataTables_scroll {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_length {
+        position: static;
+        text-align: center;
+        padding: 10px 0;
+        width: 100%;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+        width: 100%;
+        margin-top: 10px;
+        max-width: none;
+    }
+
+    /* Hide 'Show' text on very small screens */
+    .dataTables_wrapper .dataTables_length label {
+        font-size: 0;
+    }
+
+    .dataTables_wrapper .dataTables_length label:before {
+        content: 'Show';
+        font-size: 14px;
+    }
+}
+
+/* Optional: Add some additional responsiveness */
+.dataTables_wrapper {
+    overflow-x: auto;
+}
+
+/* Checkbox and Select Styling */
+.dataTables_wrapper table.dataTable tbody td.select-checkbox:before,
+.dataTables_wrapper table.dataTable tbody td.select-checkbox:after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+}
+
+/* Information Text Styling */
+.dataTables_wrapper .dataTables_info {
+    padding: 10px;
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.poster-link {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 0.25rem; /* Matches the .rounded class */
+}
+
+.poster-img {
+    display: block;
+    max-width: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.poster-link .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.poster-link:hover .poster-img {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.poster-link:hover .overlay {
+    opacity: 1;
+}
+
+.play-icon {
+    font-size: 3rem;
+    color: #fff;
+}

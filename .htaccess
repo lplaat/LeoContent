@@ -1,0 +1,17 @@
+RewriteEngine On
+
+RewriteRule ^login$ src/pages/login.php [L]
+RewriteRule ^watch$ src/pages/watch.php [L]
+
+RewriteCond %{REQUEST_URI} ^/static/ [NC]
+RewriteRule ^static/(.*)$ src/static/$1 [L]
+
+RewriteCond %{REQUEST_URI} ^/dashboard/ [NC]
+RewriteRule ^dashboard/(.*)$ src/pages/dashboard/$1 [L]
+
+RewriteCond %{REQUEST_URI} ^/api/ [NC]
+RewriteRule ^api/(.*)$ src/api/$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ src/pages/home.php [L]

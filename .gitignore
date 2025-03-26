@@ -1,6 +1,7 @@
 .env
 storage/
 movies/
+shows/
 
 ##### Windows
 # Windows thumbnail cache files

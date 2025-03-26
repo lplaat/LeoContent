@@ -26,7 +26,7 @@ class MediaDirectory extends Model
     {
         if($this->type == 1) {
             return 'Movie';
-        } else if($this->status == 2) {
+        } else if($this->type == 2) {
             return 'Show';
         }
     }

@@ -37,10 +37,7 @@ class Content extends Model
 
     public function prepare() {
         $controller = new TMDBController();
-
-        if($this->type == 1) {
-            $controller->fetchImages($this,);
-        }
+        $controller->fetchImages($this);
     }
 
     public function getPosterAttribute() {

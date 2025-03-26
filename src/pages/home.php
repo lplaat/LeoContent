@@ -11,7 +11,7 @@ include '../components/header.php';
     <h3>Home</h1>
     <div class="row">
         <?php 
-            $contents = Content::where('type', 1)->get();
+            $contents = Content::where('type', 2)->get();
             foreach($contents as $content) {
                 include '../components/card.php';
             }

@@ -39,12 +39,12 @@ foreach ($mediaDirectory->Media->whereNull('content_id')->get() as $media) {
     $title = implode(' ', array_slice($nameParts, 0, $offset));
     $year = array_slice($nameParts, $offset, 1)[0];
 
-    $content = $controller->search($title, $year);
-    if($content->count() == 0) {
+    $contents = $controller->searchMovies($title, $year);
+    if($contents->count() == 0) {
         continue;
     }
 
-    $content = $content->first();
+    $content = $contents->first();
     $content->prepare();
 
     $media->content_id = $content->id;

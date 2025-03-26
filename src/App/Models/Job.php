@@ -28,7 +28,9 @@ class Job extends Model
     function getTypeNameAttribute()
     {
         if($this->type == 1) {
-            return 'Directory Scan';
+            return 'Directory scan - movies';
+        } else if($this->type == 2) {
+            return 'Directory scan - shows';
         }
     }
 

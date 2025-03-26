@@ -35,8 +35,13 @@ class TMDBController extends Controller
 
 
     public function fetchImages($content) {
-        $url = 'https://api.themoviedb.org/3/movie/' . $content->origin_id . '/images';
-        $data = $this->curlRequest($url);
+        if($content->type == 1) {
+            $url = 'https://api.themoviedb.org/3/movie/' . $content->origin_id . '/images';
+            $data = $this->curlRequest($url);
+        } else if($content->type == 2) {
+            $url = 'https://api.themoviedb.org/3/tv/' . $content->origin_id . '/images';
+            $data = $this->curlRequest($url);
+        }
 
         if($content->Poster == null) {
             $poster = new ContentImage();
@@ -55,9 +60,9 @@ class TMDBController extends Controller
         }
     }
 
-    public function search($title, $year = null) {
+    public function searchMovies($title, $year = null) {
         // First do a local search inside the database
-        $content = Content::where('title', 'LIKE', '%' . $title . '%');
+        $content = Content::where('title', 'LIKE', '%' . $title . '%')->where('type', 1);
         if($year) {
             $content->whereRaw('YEAR(release_date) = ?', [$year]);
         }
@@ -75,6 +80,7 @@ class TMDBController extends Controller
 
         $collection = new Collection();
 
+        // Creating contents
         $response = $this->curlRequest($url)->results;
         foreach($response as $movie) {
             $content = New Content();
@@ -91,4 +97,42 @@ class TMDBController extends Controller
 
         return $collection;
     }
+
+    public function searchShow($title, $year = null) {
+        // First do a local search inside the database
+        $content = Content::where('title', 'LIKE', '%' . $title . '%')->where('type', 2);
+        if($year) {
+            $content->whereRaw('YEAR(release_date) = ?', [$year]);
+        }
+
+        $content = $content->get();
+        if($content->count() > 0) {
+            return $content;
+        }
+
+        // Requesting metadata
+        $url = 'https://api.themoviedb.org/3/search/tv?query=' . urlencode($title);
+        if($year) {
+            $url .= '&year=' . $year;
+        }
+
+        $collection = new Collection();
+
+        // Creating contents
+        $response = $this->curlRequest(url: $url);
+        foreach($response->results as $show) {
+            $content = New Content();
+            $content->origin_id = $show->id;
+            $content->title = $show->name;
+            $content->description = $show->overview;
+            $content->release_date = date('Y-m-d h:i:s', strtotime($show->first_air_date));
+            $content->adult_only = $show->adult;
+            $content->type = 2;
+            $content->save();
+
+            $collection->push($content);
+        }
+
+        return $collection;
+    }   
 }

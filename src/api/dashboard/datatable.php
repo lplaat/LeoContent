@@ -96,10 +96,11 @@ function getContent($request)
 
     $data = [];
     foreach ($contentData as $content) {
-        if($content->type == '1') {
+        if($content->type == 1) {
             $status = ($content->Media->count() == 0) ? '<b class="bg-danger rounded p-2 text-white">Missing Media</b>' : '<b class="bg-success rounded p-2 text-white">Found Media</b>';
-        } else if($content->type == '2') {
+        } else if($content->type == 2) {
             // TODO make status for show content
+            $status = ($content->Media->count() == 0) ? '<b class="bg-danger rounded p-2 text-white">Missing Media</b>' : '<b class="bg-success rounded p-2 text-white">Found ' . $content->Media->count() . ' Media</b>';
         }
 
         $data[] = [

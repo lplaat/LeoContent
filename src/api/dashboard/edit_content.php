@@ -13,9 +13,9 @@ function saveContent($request) {
         ];
     }
 
-    $fields = ['title', 'description', 'release_date'];
+    $fields = ['title', 'description', 'release_date', 'episode', 'season'];
     foreach($fields as $field) {
-        $content->{$field} = $request[$field];
+        $content->{$field} = $request[$field] ?? null;
     }
     $content->save();
 

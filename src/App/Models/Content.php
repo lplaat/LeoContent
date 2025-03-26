@@ -16,6 +16,8 @@ class Content extends Model
         'release_date',
         'adult_only',
         'parent_id',
+        'episode',
+        'season',
         'type'
     ];
 
@@ -35,9 +37,33 @@ class Content extends Model
         return $this->hasMany(Media::class, 'content_id', 'id');
     }
 
+    function getChildrenAttribute()
+    {
+        return $this->hasMany(Content::class, 'parent_id', 'id');
+    }
+
+    function getChildMediaAttribute() {
+        return $this->hasManyThrough(Media::class, Content::class, 'parent_id', 'content_id', 'id', 'id');
+    }
+
+    function getParentAttribute() {
+        return $this->hasOne(Content::class, 'id', 'parent_id')->first();
+    }
+
     public function prepare() {
         $controller = new TMDBController();
         $controller->fetchImages($this);
+
+        if($this->type == 2) {
+            $show = $controller->getShowData($this->origin_id);
+
+            if($show !== null) {
+                $this->total_episodes = $show->number_of_episodes;
+            }
+        }
+
+        $this->is_prepared = true;
+        $this->save();
     }
 
     public function getPosterAttribute() {

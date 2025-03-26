@@ -63,6 +63,14 @@ foreach ($mediaDirectory->Media->whereNull('content_id')->get() as $media) {
         continue;
     }
 
-    $content = $contents->first();
-    $content->prepare();
+    $show = $contents->first();
+    $show->prepare();
+
+    $episode = $controller->getEpisode($show, $matches['episode'], $matches['season']);
+    if($episode !== null) {
+        $episode->prepare();
+        
+        $media->content_id = $episode->id;
+        $media->save();
+    }
 }

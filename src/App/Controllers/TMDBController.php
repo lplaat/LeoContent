@@ -41,6 +41,18 @@ class TMDBController extends Controller
         } else if($content->type == 2) {
             $url = 'https://api.themoviedb.org/3/tv/' . $content->origin_id . '/images';
             $data = $this->curlRequest($url);
+        } else if($content->type == 3) {
+            $url = 'https://api.themoviedb.org/3/tv/' . $content->Parent->origin_id . '/season/' . $content->season . '/episode/' . $content->episode . '/images';
+            $data = $this->curlRequest($url);
+
+            if($content->Poster == null) {
+                $poster = new ContentImage();
+                $poster->url = 'https://image.tmdb.org/t/p/original/' . $data->stills[0]->file_path;
+                $poster->parent_id = $content->id;
+                $poster->type = 'poster';
+                $poster->fetch();
+            }
+            return;
         }
 
         if($content->Poster == null) {
@@ -90,6 +102,7 @@ class TMDBController extends Controller
             $content->release_date = date('Y-m-d h:i:s', strtotime($movie->release_date));
             $content->adult_only = $movie->adult;
             $content->type = 1;
+            $content->is_prepared = false;
             $content->save();
 
             $collection->push($content);
@@ -128,6 +141,7 @@ class TMDBController extends Controller
             $content->release_date = date('Y-m-d h:i:s', strtotime($show->first_air_date));
             $content->adult_only = $show->adult;
             $content->type = 2;
+            $content->is_prepared = false;
             $content->save();
 
             $collection->push($content);
@@ -135,4 +149,38 @@ class TMDBController extends Controller
 
         return $collection;
     }   
+
+    function getShowData($id){
+        $url = 'https://api.themoviedb.org/3/tv/' . $id . '?language=en-US';
+        
+        $show = $this->curlRequest($url);
+        if(isset($show->success) && !$show->success) {
+            return null;
+        }
+
+        return $show;
+    }
+
+    function getEpisode($showContent, $episodeNumber, $seasonNumber) {
+        $url = 'https://api.themoviedb.org/3/tv/' . $showContent->origin_id . '/season/' . $seasonNumber . '/episode/' . $episodeNumber . '?language=en-US';
+        
+        $episode = $this->curlRequest($url);
+        if(isset($episode->success) && !$episode->success) {
+            return null;
+        }
+
+        $content = New Content();
+        $content->origin_id = $episode->id;
+        $content->title = $episode->name;
+        $content->description = $episode->overview;
+        $content->release_date = date('Y-m-d h:i:s', strtotime($episode->air_date));
+        $content->parent_id = $showContent->id;
+        $content->episode = $episodeNumber;
+        $content->season = $seasonNumber;
+        $content->type = 3;
+        $content->is_prepared = false;
+        $content->save();
+
+        return $content;
+    }
 }

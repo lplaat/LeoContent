@@ -50,6 +50,26 @@ if($content == null){
                     </div>
                 </div>
 
+                <?php if($content->type == 3) { ?>
+                    <div class="row mt-3">
+                        <div class="col-2 align-content-center">
+                            <label>Episode</label>
+                        </div>
+                        <div class="col-10">
+                            <input type="number" name="episode" value="<?= $content->episode ?>" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-2 align-content-center">
+                            <label>Season</label>
+                        </div>
+                        <div class="col-10">
+                            <input type="number" name="season" value="<?= $content->season ?>" class="form-control">
+                        </div>
+                    </div>
+                <?php } ?>
+
                 <div class="row mt-3">
                     <div class="col-2 align-content-center"></div>
                     <div class="col-10">

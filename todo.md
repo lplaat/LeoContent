@@ -1,5 +1,4 @@
 - [ ] Add likes
-- [ ] Add support for shows
 - [ ] Add search
 - [ ] Add user management
 - [ ] Add playback stuff

@@ -85,7 +85,7 @@ function getContent($request)
     $length = $request['length'] ?? 10;
     if($length < 0) $length = 100;
 
-    $query = Content::query();
+    $query = Content::query()->where('is_prepared', 1);
 
     $totalRecords = MediaDirectory::count();
     $filteredRecords = $query->count();
@@ -99,8 +99,9 @@ function getContent($request)
         if($content->type == 1) {
             $status = ($content->Media->count() == 0) ? '<b class="bg-danger rounded p-2 text-white">Missing Media</b>' : '<b class="bg-success rounded p-2 text-white">Found Media</b>';
         } else if($content->type == 2) {
-            // TODO make status for show content
-            $status = ($content->Media->count() == 0) ? '<b class="bg-danger rounded p-2 text-white">Missing Media</b>' : '<b class="bg-success rounded p-2 text-white">Found ' . $content->Media->count() . ' Media</b>';
+            $status = ($content->ChildMedia->count() != $content->total_episodes) ? '<b class="bg-danger rounded p-2 text-white">Missing Media ' . $content->ChildMedia->count() . '/' . $content->total_episodes. '</b>' : '<b class="bg-success rounded p-2 text-white">Found Media</b>';
+        }else if($content->type == 3) {
+            $status = ($content->Media->count() == 0) ? '<b class="bg-danger rounded p-2 text-white">Missing Media</b>' : '<b class="bg-success rounded p-2 text-white">Found Media</b>';
         }
 
         $data[] = [

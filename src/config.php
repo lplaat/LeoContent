@@ -3,7 +3,6 @@
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Src\App\Controllers\AuthController;
 
-include 'tools.php';
 const ROOT = '/var/www/html/';
 
 require ROOT . '/vendor/autoload.php';

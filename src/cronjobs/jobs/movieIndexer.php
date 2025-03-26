@@ -1,12 +1,13 @@
 <?php
 
 use Src\App\Controllers\TMDBController;
+use Src\App\Controllers\VideoController;
 use Src\App\Models\MediaDirectory;
 use Src\App\Models\Media;
 
 $mediaDirectory = MediaDirectory::find($job->parent_id);
 
-$paths = scanDirectory($mediaDirectory->path);
+$paths = VideoController::scanDirectory($mediaDirectory->path);
 
 $existingMedia = $mediaDirectory->Media;
 $existingPathsArray = $existingMedia->pluck('path')->toArray();
@@ -17,6 +18,8 @@ foreach ($paths as $path) {
         $media = New Media();
         $media->path = $path;
         $media->media_directory_id = $mediaDirectory->id;
+        $media->duration = VideoController::getDuration($path);
+        $media->quality = VideoController::getVideoQuality($path);
         $media->save();
     }
 }

@@ -2,4 +2,5 @@
 - [ ] Add search
 - [ ] Add user management
 - [ ] Add playback stuff
-- [ ] Content save video length, and quality
+- [ ] Cleanup TMDB controller build cache for same requests
+- [ ] Create better flow for missing metadata

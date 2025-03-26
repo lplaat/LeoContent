@@ -118,8 +118,8 @@ class TMDBController extends Controller
             $content->whereRaw('YEAR(release_date) = ?', [$year]);
         }
 
-        $content = $content->get();
         if($content->count() > 0) {
+            $content = $content->get();
             return $content;
         }
 
@@ -134,6 +134,12 @@ class TMDBController extends Controller
         // Creating contents
         $response = $this->curlRequest(url: $url);
         foreach($response->results as $show) {
+            $showsCached = Content::where('origin_id', $show->id)->where('type', 2);
+            if($showsCached->count() !== 0) {
+                $collection->push($showsCached->first());
+                continue;
+            }    
+
             $content = New Content();
             $content->origin_id = $show->id;
             $content->title = $show->name;
@@ -169,6 +175,11 @@ class TMDBController extends Controller
             return null;
         }
 
+        $episodesCached = Content::where('origin_id', $episode->id)->where('type', 3);
+        if($episodesCached->count() !== 0) {
+            return $episodesCached->first();
+        }
+
         $content = New Content();
         $content->origin_id = $episode->id;
         $content->title = $episode->name;
@@ -182,5 +193,38 @@ class TMDBController extends Controller
         $content->save();
 
         return $content;
+    }
+
+    function getEpisodesFromSeason($showContent, $seasonNumber) {
+        $url = 'https://api.themoviedb.org/3/tv/' . $showContent->origin_id . '/season/' . $seasonNumber . '?language=en-US';
+        $request = $this->curlRequest($url);
+        if(isset($request->success) && !$request->success) {
+            return null;
+        }
+
+        $episodes = [];
+        foreach($request->episodes as $episode) {
+            $episodesCached = Content::where('origin_id', $episode->id)->where('type', 3);;
+            if($episodesCached->count() !== 0) {
+                $episodes[] = $episodesCached->first();
+                continue;
+            }
+
+            $content = New Content();
+            $content->origin_id = $episode->id;
+            $content->title = $episode->name;
+            $content->description = $episode->overview;
+            $content->release_date = date('Y-m-d h:i:s', strtotime($episode->air_date));
+            $content->parent_id = $showContent->id;
+            $content->episode = $episode->episode_number;
+            $content->season = $episode->season_number;
+            $content->type = 3;
+            $content->is_prepared = false;
+            $content->save();
+
+            $episodes[] = $content;
+        } 
+
+        return $episodes;
     }
 }

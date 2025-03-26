@@ -65,7 +65,7 @@ function getMedia($request)
         $data[] = [
             'id' => $media->id,
             'filename' => basename($media->path),
-            'status' => ($media->content_id == null) ? '<b class="bg-danger rounded p-2 text-white">No metadata</b>' : '<b class="bg-success rounded p-2 text-white">Found metadata</b>',
+            'status' => ($media->content_id == null) ? '<b class="bg-danger rounded p-2 text-white" style="width: max-content; display: inline-block;">No metadata</b>' : '<b class="bg-success rounded p-2 text-white" style="width: max-content; display: inline-block;">Found metadata</b>',
             'action' => '<a href="edit_media.php?id=' . $media->id . '"><i class="fa-solid fa-eye"></i></a>'
         ];
     }

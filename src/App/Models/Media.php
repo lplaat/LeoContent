@@ -12,8 +12,15 @@ class Media extends Model
     protected $fillable = [
         'path',
         'media_directory_id',
+        'duration',
+        'quality',
         'content_id'
     ];
+
+
+    function getMediaDirectoryAttribute() {
+        return $this->hasOne(MediaDirectory::class, 'id', 'media_directory_id')->first();
+    }
 
     function getContentAttribute()
     {

@@ -114,6 +114,11 @@ body {
                         <?php if ($content->type == 2 && !empty($seasons)) { ?>
                             <span class="tag-separator"></span>
                             <span class="text-white fw-bold"><?= count($seasons) ?> Seasons</span>
+                        <?php } else if($content->type == 1) { 
+                            $duration = $content->Media->first()->duration;
+                            ?>
+                            <span class="tag-separator"></span>
+                            <span class="text-white fw-bold"><?= sprintf("%01d Hours %01d Minutes", floor($duration / 3600), floor(($duration % 3600) / 60)) ?></span>
                         <?php } ?>
 
                         <?php if ($content->adult_only) { ?>
@@ -122,6 +127,11 @@ body {
                         <?php } ?>
                     </div>
                     
+                    <!-- Content description -->
+                    <div class="col-12 col-md-11 col-lg-10 mb-4">
+                        <p class="lead fw-medium"><?= htmlspecialchars($content->description) ?></p>
+                    </div>
+
                     <!-- Action buttons -->
                     <div class="d-flex gap-2 mb-4">
                         <button class="btn btn-light d-inline-flex align-items-center justify-content-center" onclick="watchContent()">
@@ -129,14 +139,9 @@ body {
                         </button>
                         <?php if ($content->type == 2 && isset($content->total_episodes)) { ?>
                             <button class="btn btn-secondary d-inline-flex align-items-center justify-content-center">
-                                <i class="fas fa-list me-2"></i><?= $content->total_episodes ?> Episodes
+                                <i class="fas fa-list me-2"></i><?= $content->ChildMedia->count() ?> Episodes
                             </button>
                         <?php } ?>
-                    </div>
-                    
-                    <!-- Content description -->
-                    <div class="col-12 col-md-11 col-lg-10 mb-4">
-                        <p class="lead"><?= htmlspecialchars($content->description) ?></p>
                     </div>
                 </div>
             </div>
@@ -145,7 +150,7 @@ body {
     
     <!-- Episodes section for shows -->
     <?php if ($content->type == 2 && !empty($seasons)) { ?>
-        <section class="py-5">
+        <section class="py-5" id="episodeSelector">
             <div class="container">
                 <!-- Season selector -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -159,7 +164,7 @@ body {
                             <?php foreach (array_keys($seasons) as $seasonNum) { ?>
                                 <li>
                                     <a class="dropdown-item <?= $seasonNum == $currentSeason ? 'active' : '' ?>" 
-                                       href="?id=<?= $content->id ?>&season=<?= $seasonNum ?>">
+                                       href="?id=<?= $content->id ?>&season=<?= $seasonNum ?>#episodeSelector">
                                        Season <?= $seasonNum ?>
                                     </a>
                                 </li>
@@ -217,10 +222,10 @@ body {
                             <small class="text-muted d-block">Released</small>
                             <span><?= date('F Y', strtotime($content->release_date)) ?></span>
                         </div>
-                        <?php if ($content->type == 2 && isset($content->total_episodes)) { ?>
+                        <?php if ($content->type == 2) { ?>
                             <div>
                                 <small class="text-muted d-block">Episodes</small>
-                                <span><?= $content->total_episodes ?></span>
+                                <span><?= $content->ChildMedia->count() ?></span>
                             </div>
                         <?php } ?>
                         <?php if ($content->adult_only) { ?>

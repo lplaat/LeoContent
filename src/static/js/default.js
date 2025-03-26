@@ -33,6 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     location.href = data.redirect;
                 }
+
+                if(data.reload !== undefined) {
+                    setTimeout(() => {
+                        location.reload();                        
+                    }, 1000);
+                }
             }
         });
     });

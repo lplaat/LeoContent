@@ -67,6 +67,7 @@ body {
     position: relative;
     transition: transform 0.2s;
     height: 100%;
+    overflow: hidden;
 }
 
 .episode-card:hover {
@@ -91,6 +92,16 @@ body {
 .tag-separator::after {
     content: "•";
     margin: 0 0.5rem;
+}
+
+.episode-info {
+    position: absolute;
+    top: 125px;
+}
+
+.episode-card:hover .episode-info {
+    bottom: 0;
+    top: unset;
 }
 </style>
 
@@ -192,7 +203,7 @@ body {
                                     >
                                     <div class="episode-number badge bg-dark bg-opacity-75">Episode <?= $episode->episode ?></div>
                                     <div class="episode-info rounded">
-                                        <h5 class="card-title"><?= htmlspecialchars($episode->title) ?></h5>
+                                        <h5 class="card-title mb-1"><?= htmlspecialchars($episode->title) ?></h5>
                                         <p class="card-text small"><?= htmlspecialchars(substr($episode->description, 0, 120)) ?>...</p>
                                     </div>
                                 </div>

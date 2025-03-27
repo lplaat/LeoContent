@@ -16,8 +16,10 @@ class Content extends Model
         'release_date',
         'adult_only',
         'parent_id',
+        'is_prepared',
         'episode',
         'season',
+        'total_episodes',
         'type'
     ];
 

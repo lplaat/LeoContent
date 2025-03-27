@@ -17,6 +17,10 @@ CREATE TABLE `content` (
   `release_date` datetime DEFAULT NULL,
   `adult_only` tinyint(1) DEFAULT NULL,
   `parent_id` int DEFAULT NULL,
+  `is_prepared` bit(1) DEFAULT NULL,
+  `episode` int DEFAULT NULL,
+  `season` int DEFAULT NULL,
+  'total_episodes' int DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime NOT NULL,
   `type` tinyint DEFAULT NULL,
@@ -41,6 +45,8 @@ CREATE TABLE `media_directory` (
 CREATE TABLE `media` (
   `id` int NOT NULL AUTO_INCREMENT,
   `path` text NOT NULL,
+  `duration` int NOT NULL,
+  `quality` text NOT NULL,
   `media_directory_id` int DEFAULT NULL,
   `content_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)

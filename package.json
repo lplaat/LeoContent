@@ -1,0 +1,11 @@
+{
+  "name": "leocontent-media",
+  "version": "1.0.0",
+  "description": "A personal media server for organizing and streaming your movie / show collection.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./media-src/main.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

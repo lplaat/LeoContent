@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    container_name: php-apache
+    container_name: LC-web
     ports:
       - "80:80"
     volumes:
@@ -13,7 +13,7 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: mysql-db
+    container_name: LC-db
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -24,7 +24,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: LC-phpmyadmin
     restart: always
     ports:
       - "8080:80"

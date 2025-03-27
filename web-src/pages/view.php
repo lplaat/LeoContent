@@ -103,6 +103,15 @@ body {
     bottom: 0;
     top: unset;
 }
+
+.text-container {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
 </style>
 
 <div class="bg-dark text-white">
@@ -140,9 +149,19 @@ body {
                     
                     <!-- Content description -->
                     <div class="col-12 col-md-11 col-lg-10 mb-4">
-                        <p class="lead fw-medium"><?= htmlspecialchars($content->description) ?></p>
+                        <p class="lead fw-medium text-container" id="expandableText">
+                            <?= htmlspecialchars($content->description) ?>
+                        </p>
                     </div>
 
+                    <script>
+                        $(document).ready(function() {
+                            $("#expandableText").click(function() {
+                                $(this).toggleClass("text-container");
+                            });
+                        });
+                    </script>
+                    
                     <!-- Action buttons -->
                     <div class="d-flex gap-2 mb-4">
                         <button class="btn btn-light d-inline-flex align-items-center justify-content-center" onclick="watchContent()">
@@ -153,6 +172,9 @@ body {
                                 <i class="fas fa-list me-2"></i><?= $content->ChildMedia->count() ?> Episodes
                             </button>
                         <?php } ?>
+                        <button class="btn btn-outline-light btn-lg d-flex align-items-center px-4 py-2 shadow-sm">
+                            <i class="fas fa-plus me-2"></i> Add to List
+                        </button>
                     </div>
                 </div>
             </div>
@@ -214,41 +236,41 @@ body {
                 </div>
             </div>
         </section>
-    <?php } ?>
     
-    <!-- Info footer with minimal details -->
-    <div class="py-4 border-top border-secondary">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-auto me-3">
-                    <?php if ($content->poster) { ?>
-                        <img src="<?= $content->poster->Url() ?>" 
-                             alt="<?= htmlspecialchars($content->title) ?> Poster" 
-                             class="img-fluid rounded shadow" style="max-height: 80px;">
-                    <?php } ?>
-                </div>
-                <div class="col">
-                    <div class="d-flex flex-wrap gap-4">
-                        <div>
-                            <small class="text-muted d-block">Released</small>
-                            <span><?= date('F Y', strtotime($content->release_date)) ?></span>
+        <!-- Info footer with minimal details -->
+        <div class="py-4 border-top border-secondary">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-auto me-3">
+                        <?php if ($content->poster) { ?>
+                            <img src="<?= $content->poster->Url() ?>" 
+                                alt="<?= htmlspecialchars($content->title) ?> Poster" 
+                                class="img-fluid rounded shadow" style="max-height: 80px;">
+                        <?php } ?>
+                    </div>
+                    <div class="col">
+                        <div class="d-flex flex-wrap gap-4">
+                            <div>
+                                <small class="text-muted d-block">Released</small>
+                                <span><?= date('F Y', strtotime($content->release_date)) ?></span>
+                            </div>
+                            <?php if ($content->type == 2) { ?>
+                                <div>
+                                    <small class="text-muted d-block">Episodes</small>
+                                    <span><?= $content->ChildMedia->count() ?></span>
+                                </div>
+                            <?php } ?>
+                            <?php if ($content->adult_only) { ?>
+                                <div>
+                                    <span class="badge text-bg-danger">18+</span>
+                                </div>
+                            <?php } ?>
                         </div>
-                        <?php if ($content->type == 2) { ?>
-                            <div>
-                                <small class="text-muted d-block">Episodes</small>
-                                <span><?= $content->ChildMedia->count() ?></span>
-                            </div>
-                        <?php } ?>
-                        <?php if ($content->adult_only) { ?>
-                            <div>
-                                <span class="badge text-bg-danger">18+</span>
-                            </div>
-                        <?php } ?>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
 </div>
 
 <script>

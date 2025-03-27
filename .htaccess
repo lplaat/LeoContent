@@ -1,17 +1,23 @@
 RewriteEngine On
 
-RewriteRule ^login$ src/pages/login.php [L]
-RewriteRule ^view$ src/pages/view.php [L]
+RewriteRule ^login$ web-src/pages/login.php [L]
+RewriteRule ^view$ web-src/pages/view.php [L]
 
 RewriteCond %{REQUEST_URI} ^/static/ [NC]
-RewriteRule ^static/(.*)$ src/static/$1 [L]
+RewriteRule ^static/(.*)$ web-src/static/$1 [L]
 
 RewriteCond %{REQUEST_URI} ^/dashboard/ [NC]
-RewriteRule ^dashboard/(.*)$ src/pages/dashboard/$1 [L]
+RewriteRule ^dashboard/(.*)$ web-src/pages/dashboard/$1 [L]
 
 RewriteCond %{REQUEST_URI} ^/api/ [NC]
-RewriteRule ^api/(.*)$ src/api/$1 [L]
+RewriteRule ^api/(.*)$ web-src/api/$1 [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ src/pages/home.php [L]
+RewriteRule ^(.*)$ web-src/pages/home.php [L]
+
+RewriteRule ^$ web-src/pages/home.php [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ web-src/pages/home.php [L]

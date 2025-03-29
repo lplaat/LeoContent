@@ -12,10 +12,10 @@ $config = parse_ini_file(ROOT . '.env');
 $capsule = new Capsule();
 $capsule->addConnection([
     'driver'    => 'mysql',
-    'host'      => getenv('DB_HOST') ?: 'db',
-    'database'  => getenv('DB_NAME') ?: 'leoContent',
-    'username'  => getenv('DB_USERNAME') ?: 'root',
-    'password'  => getenv('DB_PASSWORD') ?: 'root',
+    'host'      => $config['MYSQL_HOST'],
+    'database'  => $config['MYSQL_DATABASE'],
+    'username'  => $config['MYSQL_USER'],
+    'password'  => $config['MYSQL_PASSWORD'],
 ]);
 
 $capsule->setAsGlobal();

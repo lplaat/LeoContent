@@ -1,6 +1,8 @@
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: web-src/Dockerfile
     container_name: LC-web
     ports:
       - "80:80"
@@ -11,11 +13,25 @@ services:
     depends_on:
       - db
 
+  media:
+    build:
+      context: .
+      dockerfile: media-src/Dockerfile
+    container_name: LC-media
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+
   db:
     image: mysql:8.0
     container_name: LC-db
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "3306:3306"
@@ -30,7 +46,7 @@ services:
       - "8080:80"
     environment:
       PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     depends_on:
       - db
 

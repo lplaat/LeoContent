@@ -3,9 +3,15 @@
   "version": "1.0.0",
   "description": "A personal media server for organizing and streaming your movie / show collection.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node ./media-src/main.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "mysql2": "^3.14.0",
+    "sequelize": "^6.37.7"
+  }
 }

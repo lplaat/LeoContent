@@ -4,7 +4,7 @@ CREATE TABLE `user` (
   `password` text NOT NULL,
   `is_admin` bit(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 INSERT INTO `user` (`id`, `username`, `password`, `is_admin`) VALUES
   (1, 'admin', '$2y$10$OUyDStQk5zZZyeLlvKJ18OaoMnqwG1HkhQQ0lGozm7LlE43IPzST.', b'1');
@@ -25,7 +25,7 @@ CREATE TABLE `content` (
   `updated_at` datetime NOT NULL,
   `type` tinyint DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 CREATE TABLE `content_image` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -33,14 +33,14 @@ CREATE TABLE `content_image` (
   `path` text NOT NULL,
   `type` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 CREATE TABLE `media_directory` (
   `id` int NOT NULL AUTO_INCREMENT,
   `path` text NOT NULL,
   `type` tinyint NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 CREATE TABLE `media` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -50,7 +50,7 @@ CREATE TABLE `media` (
   `media_directory_id` int DEFAULT NULL,
   `content_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 CREATE TABLE `job` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -60,7 +60,7 @@ CREATE TABLE `job` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 CREATE TABLE `stream` (
   `id` int NOT NULL,
@@ -71,9 +71,17 @@ CREATE TABLE `stream` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
+
+CREATE TABLE `stream_config` (
+  `id` INT NOT NULL, 
+  `name` TEXT NOT NULL , 
+  `value` TEXT NOT NULL , 
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB; 
 
 ALTER TABLE `stream` MODIFY `id` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `stream_config` MODIFY `id` int NOT NULL AUTO_INCREMENT;
 ALTER TABLE `content` MODIFY `id` int NOT NULL AUTO_INCREMENT;
 ALTER TABLE `content_image` MODIFY `id` int NOT NULL AUTO_INCREMENT;
 ALTER TABLE `job` MODIFY `id` int NOT NULL AUTO_INCREMENT;

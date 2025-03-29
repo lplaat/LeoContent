@@ -19,7 +19,6 @@ const server = http.createServer(async (req, res) => {
     const url = decodeURIComponent(req.url);
     const urlParts = url.substring(1).split("/");
 
-    console.log(url);
     if (urlParts[0] === "playlists") {
         servePlaylist(res, req);
     }else if (urlParts[0] === "segments") {

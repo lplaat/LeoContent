@@ -3,6 +3,7 @@ storage/
 movies/
 shows/
 node_modules/
+segments/
 
 ##### Windows
 # Windows thumbnail cache files

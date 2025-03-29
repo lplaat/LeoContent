@@ -73,6 +73,7 @@ body {
 .episode-card:hover {
     transform: scale(1.03);
     z-index: 2;
+    cursor: pointer;
 }
 
 .episode-number {
@@ -94,14 +95,28 @@ body {
     margin: 0 0.5rem;
 }
 
+.episode-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.6), transparent);
+    padding: 8px;
+    text-align: center;
+}
+
 .episode-info {
     position: absolute;
-    top: 125px;
+    bottom: -100%;
+    transition: bottom 0.3s ease-in-out;
 }
 
 .episode-card:hover .episode-info {
     bottom: 0;
-    top: unset;
+}
+
+.episode-card:hover .episode-title {
+    display: none;
 }
 
 .text-container {
@@ -224,8 +239,11 @@ body {
                                         alt="Episode <?= $episode->episode ?>"
                                     >
                                     <div class="episode-number badge bg-dark bg-opacity-75">Episode <?= $episode->episode ?></div>
+                                    <div class="episode-title">
+                                        <h6 class="text-truncate mb-0" title="<?= htmlspecialchars($episode->title) ?>"><?= htmlspecialchars($episode->title) ?></h6>
+                                    </div>
                                     <div class="episode-info rounded">
-                                        <h5 class="card-title mb-1"><?= htmlspecialchars($episode->title) ?></h5>
+                                        <h5 class="card-title mb-1 text-truncate" title="<?= htmlspecialchars($episode->title) ?>"><?= htmlspecialchars($episode->title) ?></h5>
                                         <p class="card-text small"><?= htmlspecialchars(substr($episode->description, 0, 120)) ?>...</p>
                                     </div>
                                 </div>
@@ -273,15 +291,15 @@ body {
     <?php } ?>
 </div>
 
+<?php 
+include '../components/player.php';
+?>
+
 <script>
 function watchContent() {
     <?php if ($content->type == 1) { ?>
-        // This is a movie
-        console.log("Watching movie: <?= htmlspecialchars($content->title) ?>");
-        // Add your logic here to watch the movie
-    <?php } else { ?>
-        // This is a show, find first episode of current season
-        <?php 
+        playMedia(<?= $content->Media->first()->id ?>)
+    <?php } else {
         if (!empty($seasons) && isset($seasons[$currentSeason]) && count($seasons[$currentSeason]) > 0) {
             // Sort episodes by episode number
             $seasonEpisodes = $seasons[$currentSeason];
@@ -289,17 +307,28 @@ function watchContent() {
                 return $a->episode - $b->episode;
             });
             $firstEpisode = $seasonEpisodes[0];
-        ?>
-            watchEpisode(<?= $firstEpisode->id ?>);
+            ?>
+
+            playMedia(<?= $firstEpisode->Media->first()->id ?>);
         <?php } else { ?>
             alert("No episodes available");
-        <?php } ?>
-    <?php } ?>
+        <?php } 
+    } ?>
 }
 
 function watchEpisode(episodeId) {
-    console.log("Watching episode: " + episodeId);
-    // Add your logic here to watch the episode
+    // Find the episode media by episode content ID
+    <?php foreach ($seasons as $seasonEpisodes) {
+        foreach ($seasonEpisodes as $episode) { ?>
+            if (episodeId === <?= $episode->id ?>) {
+                playMedia(<?= $episode->Media->first()->id ?>);
+                return;
+            }
+        <?php }
+    } ?>
+    
+    // Fallback if episode not found
+    alert("Episode media not available");
 }
 </script>
 

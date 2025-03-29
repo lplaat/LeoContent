@@ -24,7 +24,7 @@ function getStream($request) {
     return [
         'success' => true,
         'data' => [
-            'url' => $config['MEDIA_SERVER_URL'] . '/playlist/' . $stream->code . '/master.m3u8'
+            'url' => $config['MEDIA_SERVER_URL'] . '/playlists/' . $stream->code . '/master.m3u8',
         ]
     ];
 }

@@ -70,7 +70,7 @@ export async function servePlaylist(res, req) {
         let i = 0;
         let j = streams[streamCode]['duration'];
         while (j > configs['segmentDuration']) {
-            playlist += `#EXTINF:${configs['segmentDuration']}\n`;
+            playlist += `#EXTINF:${configs['segmentDuration']}, no desc\n`;
             playlist += process.env.MEDIA_SERVER_URL + `/segments/${streamCode}/${profile}/${i}.ts\n`;
             j -= configs['segmentDuration'];
             i++;
@@ -78,7 +78,7 @@ export async function servePlaylist(res, req) {
 
         // If there is some duration over create the last segment
         if (j > 1) {
-          playlist += `#EXTINF:${Math.floor(j * 1000) / 1000}\n`;
+          playlist += `#EXTINF:${Math.floor(j * 1000) / 1000}, no desc\n`;
           playlist += process.env.MEDIA_SERVER_URL + `/segments/${streamCode}/${profile}/${i}.ts\n`;
         }
 

@@ -40,6 +40,8 @@ export async function provider() {
             "-to", endFrame,
             "-copyts",
             "-force_key_frames", endFrame,
+            "-muxdelay", "0",
+            "-segment_time_delta", "1",
             "-vf", `scale=${order['profile']["scale"]},format=yuv420p`,
             "-c:v", 'libx264',
             "-pix_fmt", "yuv420p",
@@ -57,7 +59,6 @@ export async function provider() {
             "-segment_list_type", "flat",
             "-segment_list", "pipe:1",
             "-async", "1",
-            "-strict", "-2",
             `"${segmentPartPath}-%01d.ts"`,
             "-loglevel", "verbose"
         ];

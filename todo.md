@@ -2,7 +2,6 @@
 - [ ] Add likes
 - [ ] Add search
 - [ ] Add user management
-- [ ] Cleanup TMDB controller build cache for same requests
 - [ ] Create better flow for missing metadata
 
 ## Media provider

@@ -1,6 +1,5 @@
 <style>
     body {
-        background-color: #f8f9fa;
         margin: 0;
     }
 

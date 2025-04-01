@@ -19,7 +19,7 @@ services:
       dockerfile: media-src/Dockerfile
     container_name: LC-media
     ports:
-      - "3000:3000"
+      - "3000:80"
     volumes:
       - .:/app
     env_file:

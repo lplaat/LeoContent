@@ -9,7 +9,7 @@ $type = isset($sidebarType) ? $sidebarType : 'default';
 $transparentNav = isset($transparentNav) && $transparentNav;
 
 if($type == 'default') { ?>
-    <nav class="navbar navbar-expand-lg <?= $transparentNav ? 'position-absolute w-100' : ''?>" style="z-index: 1;">
+    <nav class="navbar navbar-expand-lg <?= $transparentNav ? 'position-absolute w-100' : ''?>" style="z-index: 10;">
         <div class="container-fluid">
             <a class="navbar-brand" href="/home">LeoContent</a>
 
